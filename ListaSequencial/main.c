@@ -21,13 +21,6 @@ int main(){
     printf("ta vazia: %d\n",vazia(li));
     printf("ta cheia: %d\n",cheia(li));
 
-
-
-   // for(int i=0; i <= tamanho(li); i++ ){
-    //    printf("Aluno numero %d: %s", i, li->dado[i].nome);
-    //}
-
     libera_lista(li);
-
 
 }

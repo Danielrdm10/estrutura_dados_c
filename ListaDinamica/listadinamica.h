@@ -1,16 +1,20 @@
-struct node{
-    int no;
-    int *prox;
+struct aluno{
+    int matricula;
+    char nome[30];
+    float n1,n2,n3;
 };
 
-typedef struct ld{
-    struct node *no;
-    int tam;
-} LinkedL;
+typedef struct elemento* Lista;
 
-LinkedL criar_ld();
+Lista *cria_lista();
 
-int add_node(LinkedL list, struct node no);
+void libera(Lista* li);
 
+int tamanho(Lista* li);
 
+int vazia(Lista* li);
+
+void add_ini(Lista* li, struct aluno al);
+
+void add_fin(Lista* li, struct aluno al);
 

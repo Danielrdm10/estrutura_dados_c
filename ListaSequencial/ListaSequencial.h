@@ -1,4 +1,4 @@
-#define MAX 100
+#define MAX 2
 struct aluno{
     int matricula;
     char nome[30];
