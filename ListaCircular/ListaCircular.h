@@ -6,22 +6,14 @@ struct aluno{
 
 typedef struct elemento* Lista;
 
-Lista *cria_lista();
+Lista* criar_lista();
 
-void libera(Lista* li);
+void libera_lista(Lista* li);
 
 int tamanho(Lista* li);
-
-int vazia(Lista* li);
 
 int add_ini(Lista* li, struct aluno al);
 
 int add_fin(Lista* li, struct aluno al);
 
-int rem_ini(Lista* li);
-
-int rem_fim(Lista* li);
-
-int remover(Lista* li, int mat);
-
-int consulta(Lista* li, int mat, char nome[30]);
+int remove_ini(Lista* li);
