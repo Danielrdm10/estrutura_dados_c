@@ -1,7 +1,7 @@
 #ifndef FILA_H
 #define FILA_H
 
-#include "../lista_circular/circular.h"
+#include "../lista_circular/circular.h" //utiliza o padrao da fila circular linked
 
 //dados
 typedef struct{
