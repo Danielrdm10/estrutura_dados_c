@@ -1,9 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "linked.h"
+#include "linked_head.h"
 
 No* criar_lista(){
-    return NULL;
+    No *q = (No*) malloc(sizeof(No));
+    q->dado = 0;
+    q->prox = NULL;
 }
 
 void destruir_iterativo(No **p){
@@ -28,11 +30,8 @@ void destruir_lista(No **p){
 }
 
 void imprimir_lista(No *p){
-    No *aux = p;
-    while (aux != NULL){
-        printf("%d, ", aux->dado);
-        aux = aux->prox;
-    }
+    No *q;
+    for (q = p->prox; q != NULL; q = q->prox) printf("%d ->", q->dado);
     printf("NULL\n");
 }
 
@@ -44,36 +43,29 @@ void imprimir_recursivo(No *p){
     else printf("NULL\n");
 }
 
-void adicionar_inicio(No **p, int x){
+void adicionar_inicio(No *p, int x){
+    No *add = (No*) malloc(sizeof(No));
+    add->dado = x;
+    add->prox = p->prox;
+    p->prox = add;
+    p->dado++; 
 
-    No *aux;
-    aux = (No*) malloc(sizeof(No));
-    if (aux == NULL) exit(EXIT_FAILURE);
-    
-    aux->dado = x;
-    aux->prox = *p;
-    *p = aux;
-
-    //int *add = (int*) malloc(sizeof(int));
-    //*add = x;
-    //*L->dado = *add;
 }
 
-void adicionar_final(No **p, int x){
+void adicionar_final(No *p, int x){
     
     No *add = (No*) malloc(sizeof(No));
     add->dado = x;
     add->prox = NULL;
-    if (*p == NULL) *p = add;
-    else{
-        No *aux = *p;
-        while (aux->prox != NULL) aux = aux->prox;
-        aux->prox = add;
-    }
+    No *aux = p;
+    while (aux->prox != NULL) aux = aux->prox;
+    aux->prox = add;
+    p->dado++;    
 
 }
 
 int busca_valor(No *p, int x){
+    p = p->prox;
     while(p != NULL){
         if (p->dado == x) return 1;
         p = p->prox;
@@ -81,40 +73,28 @@ int busca_valor(No *p, int x){
     return 0;
 }
 
-void remover_inicio(No **p){
-    No* q = *p;
+void remover_inicio(No *p){
+    No* q = p->prox;
     if (q == NULL) return;
-    *p = q->prox;
+    p->prox = q->prox;
     free(q);
+    p->dado--;
 }
 
-void remover_final(No **p){
-    No* q = *p;
-    if(q == NULL) return;
-    if(q->prox == NULL){
-        *p ==NULL;
-        free(q);
-        return;
+void remover_final(No *p){
+    No* q = p;
+    if(q->prox != NULL){
+        while (q->prox->prox != NULL) q = q->prox;
+        No *aux = q->prox;
+	q->prox = NULL;
+	free(aux);
     }
-
-    while (q->prox->prox != NULL){
-        q = q->prox;
-    }
-    free(q->prox);
-    q->prox = NULL;
-
+    p->dado--;
 }
 
-void remover_valor(No **p, int x){
+void remover_valor(No *p, int x){
 
-    No *q = *p;
-    if (q==NULL) return;
-    if (q->dado==x){
-        *p = q->prox;
-        free(q);
-        return;
-    }
-
+    No *q = p;
     while (q->prox != NULL){
         if(q->prox->dado==x) break;
         q = q->prox;
@@ -124,5 +104,12 @@ void remover_valor(No **p, int x){
     No *tmp = q->prox;
     q->prox = tmp->prox;
     free(tmp);
+    p->dado--;
 
 }
+
+int tamanho(No *p){
+    return p->dado;
+}
+
+
