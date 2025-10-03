@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "circular.h"
+#include "dupla.h"
 
 No* criar_lista(){
     return NULL;
@@ -43,11 +43,16 @@ void adicionar_inicio(No **p, int x){
     q->dado = x;
     if (*p==NULL){
         *p = q;
-        q->prox = q;
+        q->prox = q->ant = q;
     }
     else{
-        q->prox = (*p)->prox; 
-        (*p)->prox = q;
+	No *aux = *p;
+	q->ant = aux->ant;
+        q->prox = aux;
+	(aux->ant)->prox = q;
+	aux->ant = q;
+	*p = q;
+        
     }
 }
 
@@ -56,19 +61,21 @@ void adicionar_final(No **p, int x){
     q->dado = x;
     if(*p == NULL){
         *p = q;
-        q->prox = q;
+        q->prox = q->ant = q;
     }else{
-        q->prox = (*p)->prox;
-        (*p)->prox = q;
-        *p = q;
+        No *aux = (*p)->ant;
+	(*p)->ant = q;
+	q->prox = *p;
+	aux->prox = q;
+	q->ant = aux;
+    
     }
 
 }
 
 int busca_valor(No *p, int x){
     if (p==NULL) return -1;
-    No *q = p;
-    p = p->prox;
+    No *q = p->ant;
     while (p != q){
         if(p->dado == x) return 1;
         p = p->prox;
@@ -85,24 +92,24 @@ void remover_inicio(No **p){
         *p = NULL;
         return;
     }
-    q = q->prox;
-    (*p)->prox = q->prox;
+    *p = q->prox;   
+    (*p)->ant = q->ant;
+    (q->ant)->prox = *p;
     free(q);
 }
 
 void remover_final(No **p){
     if (*p==NULL) return;
-    No* q = *p;
-    if(q->prox==q){
+    No* q = (*p)->ant;
+    if(q==*p){
         free(q); 
         *p = NULL;
         return;
     }
-    No *aux = q;
-    while(q->prox != aux) q = q->prox;
-    q->prox = aux->prox;
-    *p = q;
-    free(aux);
+    No *aux = q->ant;
+    aux->prox = *p;
+    (*p)->ant = aux;
+    free(q);
 }
 
 void remover_valor(No **p, int x){
@@ -114,21 +121,23 @@ void remover_valor(No **p, int x){
         return;
     } 
      
-    while (q->prox != *p && (q->prox)->dado != x) q = q->prox;
+    while (q != (*p)->ant && q->dado != x) q = q->prox;
 
-    if ((q->prox)->dado == x){
-        No *aux = q->prox;
-        q->prox = aux->prox;
-        if (*p == aux) *p = q;
-        free(aux);
+    if (q->dado == x){
+        No *aux1 = q->ant;
+	No *aux2 = q->prox;
+	aux1->prox = aux2;
+	aux2->ant = aux1;
+	if (*p == q) *p = aux2;
+        free(q);
     }
     
 }
 
 int tamanho_lista(No *p){
     if (p==NULL)return 0;
-    No *q = p;
+    No *q;
     int tam=1;
-    for(p=p->prox; p != q; p=p->prox) tam++;
+    for(q = p; q != p->ant; q=q->prox) tam++;
     return tam;
 }

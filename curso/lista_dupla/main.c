@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "circular.h"
+#include "dupla.h"
 
 int main(){
     int i, num;

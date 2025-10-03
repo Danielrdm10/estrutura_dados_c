@@ -1,9 +1,9 @@
-#ifndef LINKED
-#define LINKED
+#ifndef LINKED_DUPLA
+#define LINKED_DUPLA
 
 typedef struct no{
     int dado;
-    struct no *prox;
+    struct no *prox, *ant;
 } No;
 
 No* criar_lista();
