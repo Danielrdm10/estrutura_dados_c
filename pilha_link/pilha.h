@@ -1,11 +1,11 @@
 #ifndef PILHA_L_H
 #define PILHA_L_H
 
-#include "../lista_circular/circular.h" //utiliza o padrao da fila circular linked
+#include "../linked_head/linked_head.h" //utiliza o padrao da fila linked head
 
 //dados
 typedef struct{
-    No *L;
+  No *L;
 } Pilha;
 
 #define MAX 100

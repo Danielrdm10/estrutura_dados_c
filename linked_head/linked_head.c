@@ -112,4 +112,7 @@ int tamanho(No *p){
     return p->dado;
 }
 
-
+int acessar_primeiro(No *p){
+    if(p->prox==NULL) return -1;
+    return (p->prox)->dado;
+}

@@ -2,11 +2,12 @@
 #include <stdlib.h>
 
 Pilha* pilha_criar(){
-    Pilha *p = (Pilha*) malloc(sizeof(Pilha));
-    p->dados = malloc(MAX*sizeof(int));
-    p->topo = 0;
-    p->N = MAX;
-    return p;
+   Pilha *p = (Pilha*) malloc(sizeof(Pilha));
+   p->dados = (int*) malloc(MAX * sizeof(int));
+   p->topo = 0;
+   p->N = MAX;
+
+   return p;
 }
 
 void pilha_destruir(Pilha **p){

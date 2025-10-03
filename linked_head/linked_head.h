@@ -26,5 +26,6 @@ int buscar_valor(No *L, int x);
 
 int tamanho(No *p);
 
+int acessar_primeiro(No *p);
 
 #endif
