@@ -61,3 +61,51 @@ int altura(No *raiz){
 
 }
 
+//reparar que so muda o onde e feito o print do no
+
+void pre_order(No *raiz){
+    if (raiz != NULL){
+        printf("%d", raiz->dado);
+        pre_ordem(raiz->esq);
+        pre_ordem(raiz->dir);
+    }
+}
+void pos_order(No *raiz){
+    if (raiz != NULL){
+        pos_ordem(raiz->esq);
+        pos_ordem(raiz->dir);
+        printf("%d", raiz->dado);
+    }
+}
+
+void in_order(No *raiz){
+    if (raiz != NULL){
+        in_ordem(raiz->esq);
+        printf("%d", raiz->dado);
+        in_ordem(raiz->dir);
+    }
+}
+
+//largura usa fila
+
+void largura(No *raiz){
+    p_fila f;
+    f = criar_fila();
+    enfileirar(f, raiz);
+    while(!fila_vazia(f)){
+        raiz = desenfileirar(f);
+        if (raiz != NULL){
+            enfileirar(f, raiz->esq);
+            enfileirar(f, raiz->dir);
+            printf("%d", raiz->dado);
+        }
+    }
+
+    destruir_fila(f);
+}
+
+
+
+
+
+

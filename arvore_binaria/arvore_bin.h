@@ -22,6 +22,13 @@ int numero_nos(No *raiz);
 
 int altura(No *raiz);
 
+void pre_order(No *raiz);
+
+void pos_order(No *raiz);
+
+void in_order(No *raiz);
+
+void largura(No *raiz);
 
 #endif
 
