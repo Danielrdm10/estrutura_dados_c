@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "arvore_bin_busca.h"
 
+void remover_sucessor(No* p);
 
 
 No* criar_arvore(){
@@ -39,9 +40,12 @@ void in_order(No *p){
 
 
 No* buscar(No *p, int chave){
-    if (p == NULL || chave==p->chave ) return p;
-    if (chave < p->chave) return buscar(p->esq, chave);
-    else return buscar(p->dir, chave);
+    if (p == NULL || chave==p->chave ) 
+	return p;
+    if (chave < p->chave) 
+	return buscar(p->esq, chave);
+    else 
+	return buscar(p->dir, chave);
 }
 
 No *inserir(No *p, int chave){
@@ -59,72 +63,82 @@ No *inserir(No *p, int chave){
     return p;
 }
 
-/*
-
-No* procurar_no(No *raiz, int x){
-    if (raiz == NULL || raiz->dado == x)
-        return raiz;
-    No *esq = procurar_no(raiz->esq, x);
-    if (esq != NULL)
-        return esq;
-    return procurar_no(raiz->dir, x);
+No* minimo(No *p){
+    if (p == NULL || p->esq == NULL)
+        return p;
+    return minimo(p->esq);
 }
 
-int numero_nos(No *raiz){
-    if(raiz == NULL){
-        return 0;
+No* minimo_interativo(No *p){
+   while (p == NULL || p->esq == NULL){
+       p = p->esq;
+   }
+   return p;
+}
+
+No* maximo(No *p){
+    if (p == NULL || p->dir == NULL)
+        return p;
+    return minimo(p->dir);
+}
+
+No* maximo_interativo(No *p){
+   while (p == NULL || p->dir == NULL){
+       p = p->dir;
+   }
+   return p;
+}
+
+No* ancestral_a_direita(No *x){
+    if (x == NULL) 
+	return NULL;
+    if (x->pai == NULL || x->pai->esq == x) 
+	return x->pai;
+    else
+	return ancestral_a_direita(x->pai);
+}
+
+No* sucessor(No *x){
+    if (x->dir != NULL)
+        return minimo(x->dir);
+    else
+	return ancestral_a_direita(x);
+    
+}
+
+No* remover_rec(No* p, int chave){
+    if (p == NULL) return NULL;
+    if (chave < p->chave)
+	p->esq = remover_rec(p->esq, chave);
+    else if (chave > p->chave)
+	p->dir = remover_rec(p->dir, chave);
+    else if (p->esq == NULL){
+        No *q = p->dir; free(p);
+	return q;
     }
-    return numero_nos(raiz->esq) + numero_nos(raiz->dir) + 1;
-}
-
-int altura(No *raiz){
-    int h_esq, h_dir;
-    if (raiz == NULL)
-        return 0;
-    h_esq = altura(raiz->esq);
-    h_dir = altura(raiz->dir);
-    return(h_esq > h_dir ? h_esq : h_dir) + 1;
-
-}
-
-//reparar que so muda o onde e feito o print do no
-
-void pre_order(No *raiz){
-    if (raiz != NULL){
-        printf("%d", raiz->dado);
-        pre_ordem(raiz->esq);
-        pre_ordem(raiz->dir);
+    else if (p->dir == NULL){
+        No *q = p->esq; free(p);
+	return q;
     }
+    else remover_sucessor(p);
+    return p;
 }
-void pos_order(No *raiz){
-    if (raiz != NULL){
-        pos_ordem(raiz->esq);
-        pos_ordem(raiz->dir);
-        printf("%d", raiz->dado);
+
+void remover(No **p, int chave){
+    *p = remover_rec(*p, chave);
+}
+
+void remover_sucessor(No *p){
+    No *min = p->dir;
+    No *pai = p;
+    while (min->esq != NULL){
+        pai = min;
+	min = min->esq;
     }
+    if (pai->esq == min)
+	pai->esq = min->dir;
+    else
+	pai->dir = min->dir;
+    p->chave = min->chave; free(min);
 }
-
-
-//largura usa fila
-
-void largura(No *raiz){
-    p_fila f;
-    f = criar_fila();
-    enfileirar(f, raiz);
-    while(!fila_vazia(f)){
-        raiz = desenfileirar(f);
-        if (raiz != NULL){
-            enfileirar(f, raiz->esq);
-            enfileirar(f, raiz->dir);
-            printf("%d", raiz->dado);
-        }
-    }
-
-    destruir_fila(f);
-}
-
-
-*/
-
-
 

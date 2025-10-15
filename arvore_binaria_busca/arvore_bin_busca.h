@@ -1,5 +1,5 @@
-#ifndef ARVORE_BIN
-#define ARVORE_BIN
+#ifndef ABB
+#define ABB
 
 //atributos
 typedef struct no {
