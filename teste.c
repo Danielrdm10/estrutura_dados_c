@@ -3,7 +3,7 @@
 
 int** criar_matriz(int m, int n){
     int **matriz = (int**) malloc(m * sizeof(int*));
-    for (int i = 0; i<n; i++){
+	for (int i = 0; i<n; i++){
         matriz[i] = (int*) malloc(n * sizeof(int));
         for (int j = 0; j<m; j++) matriz[i][j]==0;
     }
