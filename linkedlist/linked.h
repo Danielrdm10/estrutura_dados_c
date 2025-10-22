@@ -22,7 +22,7 @@ void remover_final(No **L);
 void remover_valor(No **L, int x);
 
 //buscar
-int buscar_valor(No **L, int x);
+int busca_valor(No *L, int x);
 
 
 
